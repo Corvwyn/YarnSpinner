@@ -192,13 +192,14 @@ namespace Yarn
                  *  passes it to the client as a line
                  */
                 var lineText = program.GetString ((string)i.operandA);
+                var lineId = i.operandA.ToString().Replace("line:", "");
 
                 if (lineText == null) {
                     dialogue.LogErrorMessage("No loaded string table includes line " + i.operandA);
                     break;
                 }
 
-                lineHandler (new Dialogue.LineResult (lineText));
+                lineHandler (new Dialogue.LineResult (lineText, lineId));
 
                 break;
             case ByteCode.RunCommand:
@@ -389,9 +390,11 @@ namespace Yarn
 
                 // Otherwise, present the list of options to the user and let them pick
                 var optionStrings = new List<string> ();
+                var lineIds = new List<string>();
 
                 foreach (var option in state.currentOptions) {
                     optionStrings.Add (program.GetString (option.Key));
+                    lineIds.Add(option.Key.Replace("line:", ""));
                 }
 
                 // We can't continue until our client tell us which option to pick
@@ -399,7 +402,7 @@ namespace Yarn
 
                 // Pass the options set to the client, as well as a delegate for them to call when the
                 // user has made a selection
-                optionsHandler (new Dialogue.OptionSetResult (optionStrings, delegate (int selectedOption) {
+                optionsHandler (new Dialogue.OptionSetResult (optionStrings, lineIds, delegate (int selectedOption) {
 
                     // we now know what number option was selected; push the corresponding node name
                     // to the stack
