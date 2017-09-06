@@ -192,14 +192,14 @@ namespace Yarn
                  *  passes it to the client as a line
                  */
                 var lineText = program.GetString ((string)i.operandA);
-                var lineId = i.operandA.ToString().Replace("line:", "");
+                var lineCode = i.operandA.ToString().Replace("line:", "");
 
                 if (lineText == null) {
                     dialogue.LogErrorMessage("No loaded string table includes line " + i.operandA);
                     break;
                 }
 
-                lineHandler (new Dialogue.LineResult (lineText, lineId));
+                lineHandler (new Dialogue.LineResult (lineText, lineCode));
 
                 break;
             case ByteCode.RunCommand:

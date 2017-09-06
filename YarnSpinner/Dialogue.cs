@@ -49,8 +49,8 @@ namespace Yarn {
     /** (Currently this just wraps a single field, but doing it like this
      * gives us the option to add more stuff later without breaking the API.)
      */
-    public struct Line { public string text; public string lineId; }
-    public struct Options { public IList<string> options; public IList<string> lineIds; }
+    public struct Line { public string text; public string lineCode; }
+    public struct Options { public IList<string> options; public IList<string> lineCodes; }
     public struct Command { public string text; }
 
     /// Where we turn to for storing and loading variable data.
@@ -136,10 +136,10 @@ namespace Yarn {
 
             public Line line;
 
-            public LineResult (string text, string lineId) {
+            public LineResult (string text, string lineCode) {
                 var line = new Line();
                 line.text = text;
-                line.lineId = lineId;
+                line.lineCode = lineCode;
                 this.line = line;
             }
 
@@ -164,10 +164,10 @@ namespace Yarn {
             public Options options;
             public OptionChooser setSelectedOptionDelegate;
 
-            public OptionSetResult (IList<string> optionStrings, IList<string> lineIds, OptionChooser setSelectedOption) {
+            public OptionSetResult (IList<string> optionStrings, IList<string> lineCodes, OptionChooser setSelectedOption) {
                 var options = new Options();
                 options.options = optionStrings;
-                options.lineIds = lineIds;
+                options.lineCodes = lineCodes;
                 this.options = options;
                 this.setSelectedOptionDelegate = setSelectedOption;
             }
